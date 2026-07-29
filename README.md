@@ -21,10 +21,10 @@ Start the local PostgreSQL database using Docker:
 docker compose up -d
 ```
 
-Push the database schema (creates the necessary tables):
+Run the migrations (creates the necessary tables):
 
 ```bash
-npx drizzle-kit push
+npx drizzle-kit migrate
 ```
 
 ---
@@ -44,10 +44,8 @@ npx tsx src/generate.ts --size=1gb
 
 This project normalizes the flat CSV data into an Entity-Attribute-Value (EAV) structure (`import_cells`) to handle dynamic columns.
 
-To run the import with maximum speed, we use the `--withUnlogged=true` flag. This temporarily disables PostgreSQL's Write-Ahead Log (WAL) for the table, instantly cutting disk writes in half.
-
 ```bash
-npm run import -- data/1gb-test.csv --withUnlogged=true
+npm run import -- data/1gb-test.csv
 ```
 
 ---
