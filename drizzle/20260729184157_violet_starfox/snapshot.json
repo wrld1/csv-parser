@@ -1,7 +1,7 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "371031cb-4d97-437d-9681-462ed8a81635",
+  "id": "40b40705-7bae-4750-894d-2ad8009290bb",
   "prevIds": [
     "00000000-0000-0000-0000-000000000000"
   ],
@@ -180,48 +180,6 @@
       "entityType": "columns",
       "schema": "public",
       "table": "imports"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        {
-          "value": "column_id",
-          "isExpression": false,
-          "asc": true,
-          "nullsFirst": false,
-          "opclass": null
-        }
-      ],
-      "isUnique": false,
-      "where": null,
-      "with": "",
-      "method": "btree",
-      "concurrently": false,
-      "name": "import_cells_column_id_idx",
-      "entityType": "indexes",
-      "schema": "public",
-      "table": "import_cells"
-    },
-    {
-      "nameExplicit": true,
-      "columns": [
-        {
-          "value": "row_number",
-          "isExpression": false,
-          "asc": true,
-          "nullsFirst": false,
-          "opclass": null
-        }
-      ],
-      "isUnique": false,
-      "where": null,
-      "with": "",
-      "method": "btree",
-      "concurrently": false,
-      "name": "import_cells_row_number_idx",
-      "entityType": "indexes",
-      "schema": "public",
-      "table": "import_cells"
     },
     {
       "nameExplicit": false,

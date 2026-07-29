@@ -23,11 +23,7 @@ export const importCells = pgTable(
       .references(() => importColumns.id, { onDelete: "cascade" }),
     rowNumber: bigint("row_number", { mode: "number" }).notNull(),
     value: text("value").notNull(),
-  },
-  (t) => [
-    index("import_cells_column_id_idx").on(t.columnId),
-    index("import_cells_row_number_idx").on(t.rowNumber),
-  ],
+  }
 );
 
 export type ImportRow = typeof imports.$inferSelect;

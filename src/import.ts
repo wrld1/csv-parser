@@ -1,6 +1,7 @@
 import { createReadStream } from "node:fs";
 import { basename } from "node:path";
 import { parse } from "csv-parse";
+import { sql } from "drizzle-orm";
 import { db } from "./db/index.js";
 import {
   imports,
@@ -13,9 +14,25 @@ const BATCH_SIZE = 20000;
 const EVEN_OFFSET = 1;
 
 async function main() {
-  const file = process.argv[2] || "data/10gb-test.csv";
+  let file = "data/10gb-test.csv";
+  let withUnlogged = false;
 
-  const parser = createReadStream(file).pipe(parse({ bom: true }));
+  for (const arg of process.argv.slice(2)) {
+    if (arg.startsWith("--withUnlogged=")) {
+      withUnlogged = arg.split("=")[1] === "true";
+    } else if (!arg.startsWith("--")) {
+      file = arg;
+    }
+  }
+
+  const parser = createReadStream(file).pipe(
+    parse({
+      bom: true,
+      skip_empty_lines: true,
+      relax_column_count: true,
+      relax_quotes: true,
+    })
+  );
 
   await new Promise((resolve) => parser.once("readable", resolve));
   const columnNames = parser.read();
@@ -44,6 +61,11 @@ async function main() {
 
   console.log(`Setup complete. Starting data import for ${basename(file)}...`);
   console.log(`Only importing even columns: ${evenColumnNames.join(", ")}`);
+
+  if (withUnlogged) {
+    console.log("Setting table to UNLOGGED for maximum speed...");
+    await db.execute(sql`ALTER TABLE import_cells SET UNLOGGED;`);
+  }
 
   console.time("Total Import Time");
 
@@ -80,6 +102,13 @@ async function main() {
   if (batch.length > 0) {
     await db.insert(importCells).values(batch);
     insertedCellsCount += batch.length;
+  }
+
+  if (withUnlogged) {
+    console.log(
+      "Restoring table to LOGGED mode (this might take a moment to sync to disk)...",
+    );
+    await db.execute(sql`ALTER TABLE import_cells SET LOGGED;`);
   }
 
   console.timeEnd("Total Import Time");
