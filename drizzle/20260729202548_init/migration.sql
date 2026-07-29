@@ -17,5 +17,7 @@ CREATE TABLE "imports" (
 	"created_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+CREATE INDEX "import_cells_column_id_idx" ON "import_cells" ("column_id");--> statement-breakpoint
+CREATE INDEX "import_cells_row_number_idx" ON "import_cells" ("row_number");--> statement-breakpoint
 ALTER TABLE "import_cells" ADD CONSTRAINT "import_cells_column_id_import_columns_id_fkey" FOREIGN KEY ("column_id") REFERENCES "import_columns"("id") ON DELETE CASCADE;--> statement-breakpoint
 ALTER TABLE "import_columns" ADD CONSTRAINT "import_columns_import_id_imports_id_fkey" FOREIGN KEY ("import_id") REFERENCES "imports"("id") ON DELETE CASCADE;

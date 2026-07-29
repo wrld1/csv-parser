@@ -1,9 +1,9 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "40b40705-7bae-4750-894d-2ad8009290bb",
+  "id": "5aa0c553-4cd2-4bc5-b213-652ffa7739df",
   "prevIds": [
-    "00000000-0000-0000-0000-000000000000"
+    "b02d38dd-0224-48fc-8e93-1254c1958764"
   ],
   "ddl": [
     {
@@ -47,7 +47,7 @@
       "table": "import_cells"
     },
     {
-      "type": "bigint",
+      "type": "integer",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
@@ -60,7 +60,7 @@
       "table": "import_cells"
     },
     {
-      "type": "bigint",
+      "type": "integer",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
@@ -86,7 +86,7 @@
       "table": "import_cells"
     },
     {
-      "type": "bigint",
+      "type": "integer",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
@@ -98,7 +98,7 @@
         "increment": "1",
         "startWith": "1",
         "minValue": "1",
-        "maxValue": "9223372036854775807",
+        "maxValue": "2147483647",
         "cache": 1,
         "cycle": false
       },
@@ -108,7 +108,7 @@
       "table": "import_columns"
     },
     {
-      "type": "bigint",
+      "type": "integer",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
@@ -134,7 +134,7 @@
       "table": "import_columns"
     },
     {
-      "type": "bigint",
+      "type": "integer",
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
@@ -146,7 +146,7 @@
         "increment": "1",
         "startWith": "1",
         "minValue": "1",
-        "maxValue": "9223372036854775807",
+        "maxValue": "2147483647",
         "cache": 1,
         "cycle": false
       },
