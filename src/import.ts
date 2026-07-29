@@ -13,7 +13,7 @@ const BATCH_SIZE = 20000;
 const EVEN_OFFSET = 1;
 
 async function main() {
-  const file = process.argv[2] || "10gb-test.csv";
+  const file = process.argv[2] || "data/10gb-test.csv";
 
   const parser = createReadStream(file).pipe(parse({ bom: true }));
 
