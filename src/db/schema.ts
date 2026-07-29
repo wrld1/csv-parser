@@ -14,19 +14,13 @@ export const importColumns = pgTable("import_columns", {
   name: text("name").notNull(),
 });
 
-export const importCells = pgTable(
-  "import_cells",
-  {
-    id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
-    columnId: bigint("column_id", { mode: "number" })
-      .notNull()
-      .references(() => importColumns.id, { onDelete: "cascade" }),
-    rowNumber: bigint("row_number", { mode: "number" }).notNull(),
-    value: text("value").notNull(),
-  }
-);
+export const importCells = pgTable("import_cells", {
+  id: bigint({ mode: "number" }).primaryKey().generatedAlwaysAsIdentity(),
+  columnId: bigint("column_id", { mode: "number" })
+    .notNull()
+    .references(() => importColumns.id, { onDelete: "cascade" }),
+  rowNumber: bigint("row_number", { mode: "number" }).notNull(),
+  value: text("value").notNull(),
+});
 
-export type ImportRow = typeof imports.$inferSelect;
-export type ImportColumnRow = typeof importColumns.$inferSelect;
-export type ImportCellRow = typeof importCells.$inferSelect;
 export type NewImportCell = typeof importCells.$inferInsert;
