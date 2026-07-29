@@ -31,7 +31,7 @@ async function main() {
       skip_empty_lines: true,
       relax_column_count: true,
       relax_quotes: true,
-    })
+    }),
   );
 
   await new Promise((resolve) => parser.once("readable", resolve));
@@ -43,6 +43,9 @@ async function main() {
     .filter((i: number) => i % 2 === EVEN_OFFSET);
 
   const evenColumnNames = evenIndexes.map((i: number) => columnNames[i]);
+
+  // In case of crash during import, we can delete the previous import and start over but the files are the same so I commented this out
+  // await db.delete(imports).where(eq(imports.fileName, basename(file)));
 
   const [createdImport] = await db
     .insert(imports)
@@ -104,12 +107,12 @@ async function main() {
     insertedCellsCount += batch.length;
   }
 
-  if (withUnlogged) {
-    console.log(
-      "Restoring table to LOGGED mode (this might take a moment to sync to disk)...",
-    );
-    await db.execute(sql`ALTER TABLE import_cells SET LOGGED;`);
-  }
+  // if (withUnlogged) {
+  //   console.log(
+  //     "Restoring table to LOGGED mode (this might take a moment to sync to disk)...",
+  //   );
+  //   await db.execute(sql`ALTER TABLE import_cells SET LOGGED;`);
+  // }
 
   console.timeEnd("Total Import Time");
   console.log(

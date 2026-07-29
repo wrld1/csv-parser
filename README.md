@@ -45,7 +45,7 @@ npx tsx src/generate.ts --size=1gb
 This project normalizes the flat CSV data into an Entity-Attribute-Value (EAV) structure (`import_cells`) to handle dynamic columns.
 
 ```bash
-npm run import -- data/1gb-test.csv
+npm run import data/1gb-test.csv
 ```
 
 ---
