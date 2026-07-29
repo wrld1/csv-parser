@@ -62,3 +62,7 @@ docker compose down -v
 docker compose up -d
 npx drizzle-kit migrate
 ```
+
+result: Total Import Time: 4:39.565 (m:ss.mmm)
+Done! Processed 5679858 rows and inserted 28399290 cells.
+Without unlogged
