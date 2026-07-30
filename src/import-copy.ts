@@ -2,7 +2,6 @@ import { createReadStream } from "node:fs";
 import { basename } from "node:path";
 import { Transform } from "node:stream";
 import { parse } from "csv-parse";
-import { sql } from "drizzle-orm";
 import pg from "pg";
 import { from as copyFrom } from "pg-copy-streams";
 import { db } from "./db/index.js";
@@ -49,9 +48,6 @@ async function main() {
     .returning({ id: importColumns.id });
 
   console.log(`Setup complete. Starting COPY import for ${basename(file)}...`);
-
-  console.log("Setting table to UNLOGGED for maximum speed...");
-  await db.execute(sql`ALTER TABLE import_cells SET UNLOGGED;`);
 
   console.time("Total Copy Import Time");
 
@@ -112,9 +108,6 @@ async function main() {
   } finally {
     await client.end();
   }
-
-  console.log("Restoring table to LOGGED mode...");
-  await db.execute(sql`ALTER TABLE import_cells SET LOGGED;`);
 
   console.timeEnd("Total Copy Import Time");
   console.log(

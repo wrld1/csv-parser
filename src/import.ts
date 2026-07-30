@@ -28,20 +28,17 @@ type ImportPlan = {
 
 function parseArgs(argv: string[]) {
   let file = "data/10gb-test.csv";
-  let withUnlogged = false;
   let restart = false;
 
   for (const arg of argv) {
-    if (arg.startsWith("--withUnlogged=")) {
-      withUnlogged = arg.split("=")[1] === "true";
-    } else if (arg === "--restart") {
+    if (arg === "--restart") {
       restart = true;
     } else if (!arg.startsWith("--")) {
       file = arg;
     }
   }
 
-  return { file, withUnlogged, restart };
+  return { file, restart };
 }
 
 function preview(value: string) {
@@ -216,7 +213,7 @@ function reportFailure(options: {
 }
 
 async function main() {
-  const { file, withUnlogged, restart } = parseArgs(process.argv.slice(2));
+  const { file, restart } = parseArgs(process.argv.slice(2));
 
   const { size: fileSize } = await stat(file);
   const header = await readHeader(file);
@@ -236,14 +233,6 @@ async function main() {
   const cellsPerRow = columns.indexes.length;
 
   console.log(`Only importing even columns: ${columns.names.join(", ")}`);
-
-  if (withUnlogged) {
-    console.log("Setting table to UNLOGGED for maximum speed...");
-    console.log(
-      "Warning: an UNLOGGED table is truncated after an unclean shutdown, which invalidates the checkpoint.",
-    );
-    await db.execute(sql`ALTER TABLE import_cells SET UNLOGGED;`);
-  }
 
   console.time("Total Import Time");
 
