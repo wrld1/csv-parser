@@ -191,7 +191,7 @@ function reportFailure(options: {
   const failedRow = error instanceof RowImportError ? error.rowNumber : null;
 
   console.error(
-    `\nImport #${importId} stopped${failedRow ? ` at row ${failedRow}` : ""}.`,
+    `Import #${importId} stopped${failedRow ? ` at row ${failedRow}` : ""}.`,
   );
   console.error(`  Postgres: ${reason}`);
   console.error(
@@ -210,7 +210,7 @@ function reportFailure(options: {
   }
 
   console.error(
-    `\n  Fix the row in ${file} (or widen the column), then run the same command again — ` +
+    ` Fix the row in ${file} (or widen the column), then run the same command again — ` +
       `it resumes from the checkpoint. Use --restart to discard import #${importId} and start over.`,
   );
 }
